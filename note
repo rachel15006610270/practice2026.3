@@ -1,1 +1,59 @@
+#冒泡排序实现
+class Solution:
+    def bubbleSort(self, nums: [int]) -> [int]:
+        """冒泡排序算法实现"""
+        n = len(nums)
+        # 外层循环控制趟数，每一趟将当前未排序区间的最大值「冒泡」到末尾
+        for i in range(n - 1):
+            swapped = False  # 记录本趟是否发生过交换
+            # 内层循环负责相邻元素两两比较，将较大值后移
+            for j in range(n - i - 1):
+                # 如果前一个元素大于后一个元素，则交换
+                if nums[j] > nums[j + 1]:
+                    nums[j], nums[j + 1] = nums[j + 1], nums[j]
+                    swapped = True  # 发生了交换
+            # 如果本趟没有发生任何交换，说明数组已经有序，可以提前结束
+            if not swapped:
+                break
+        return nums  # 返回排序后的数组
 
+
+#选择排序实现
+class Solution:
+    def selectionSort(self, nums: [int]) -> [int]:
+        n = len(nums)
+        for i in range(n - 1):
+            # 找到未排序区间中最小元素的位置
+            min_i = i
+            for j in range(i + 1, n):
+                if nums[j] < nums[min_i]:
+                    min_i = j
+            # 交换元素
+            if i != min_i:
+                nums[i], nums[min_i] = nums[min_i], nums[i]
+        return nums
+
+    def sortArray(self, nums: [int]) -> [int]:
+        return self.selectionSort(nums)
+
+
+
+
+#插入排序代码实现
+class Solution:
+    def insertionSort(self, nums: [int]) -> [int]:
+        # 遍历无序区间
+        for i in range(1, len(nums)):
+            temp = nums[i]
+            j = i
+            # 从右至左遍历有序区间
+            while j > 0 and nums[j - 1] > temp:
+                # 将大于temp的元素右移
+                nums[j] = nums[j - 1]
+                j -= 1
+            # 插入到正确位置
+            nums[j] = temp
+        return nums
+
+    def sortArray(self, nums: [int]) -> [int]:
+        return self.insertionSort(nums)
