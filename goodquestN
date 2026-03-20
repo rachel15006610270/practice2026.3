@@ -86,4 +86,15 @@ class Solution:
             j -= 1
         return "".join(ans[::-1])
 
- 
+
+
+#实现 pow(x, n) ，即计算 x 的整数 n 次幂函数（即，xn ）
+class Solution:
+    def myPow(self, x: float, n: int) -> float:
+        def quickMul(N):
+            if N == 0:
+                return 1.0
+            y = quickMul(N // 2)
+            return y * y if N % 2 == 0 else y * y * x
+        
+        return quickMul(n) if n >= 0 else 1.0 / quickMul(-n)
