@@ -104,3 +104,36 @@ class Solution:
     def sortArray(self, nums: [int]) -> [int]:
         """排序接口，调用shellSort方法"""
         return self.shellSort(nums)
+
+
+
+
+
+
+#0-1背包动态规划实现
+class Solution:
+    # 思路 2：动态规划 + 滚动数组优化
+    def zeroOnePackMethod2(self, weight: [int], value: [int], W: int) -> int:
+        """
+        0-1 背包问题的滚动数组优化解法
+        :param weight: List[int]，每件物品的重量
+        :param value: List[int]，每件物品的价值
+        :param W: int，背包最大承重
+        :return: int，背包可获得的最大价值
+        """
+        size = len(weight)
+        # dp[w] 表示容量为 w 时背包可获得的最大价值
+        dp = [0] * (W + 1)
+
+        # 遍历每一件物品
+        for i in range(size):
+            # 必须逆序遍历容量，防止状态被提前覆盖
+            for w in range(W, weight[i] - 1, -1):
+                # 状态转移：不选第 i 件物品 or 选第 i 件物品
+                # dp[w] = max(不选, 选)
+                dp[w] = max(dp[w], dp[w - weight[i]] + value[i])
+                # 解释：
+                # dp[w]：不选第 i 件物品，价值不变
+                # dp[w - weight[i]] + value[i]：选第 i 件物品，容量减少，相应加上价值
+
+        return dp[W]
